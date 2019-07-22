@@ -7,7 +7,7 @@
             <img src="http:////yanxuan-static.nosdn.127.net/hxm/yanxuan-wap/p/20161201/style/img/icon-normal/indexLogo-a90bdaae6b.png" alt="">
           </a>
         </h1>
-        <div class="searchContent">
+        <div class="searchContent" @click="goto('/search')">
           <span class="icon">
             <i class="iconfont icon-sousuo"></i>
           </span>
@@ -15,23 +15,28 @@
         </div>
         <div class="isButton">登录</div>
       </div>
-      <div class="headerNavUl">
-        <ul class="headerNavList">
-          <li class="current">推荐</li>
-          <li>居家生活</li>
-          <li>服饰鞋包</li>
-          <li>美食酒水</li>
-          <li>个护清洁</li>
-          <li>母婴亲子</li>
-          <li>运动旅行</li>
-          <li>数码家电</li>
-          <li>全球特色</li>
+      <div class="headerNavUl" ref="topWrapper">
+        <ul class="headerNavList" ref="list" v-if="!isShowMore">
+          <li v-for="(item,index) in navList" :key="index" :class="currentIndex===index?'current':' '" @click="get(index)">{{item}}</li>
         </ul>
-        <div class="toggle">
-          <img src="http://yanxuan-static.nosdn.127.net/hxm/yanxuan-wap/p/20161201/style/img/icon-normal/arrow-down-3-799ded53ea.png">
+
+        <div class="toggle" @click="handleArrow">
+          <img src="http://yanxuan-static.nosdn.127.net/hxm/yanxuan-wap/p/20161201/style/img/icon-normal/arrow-down-3-799ded53ea.png"
+            :class="fade?'downArrow':'upArrow'">
         </div>
       </div>
+      <div class="more" v-if="isShowMore">       
+        <div class="moreTitle">全部频道</div>        
+      </div>
+
     </div>
+
+    <!-- 点击显示更多 -->
+    <div class="moreUl" v-if="isShowMore">
+      <li v-for="(item,index) in navList" :key="index" :class="currentIndex===index?'current':' '" @click="currentIndex=index">{{item}}</li>
+    </div>
+    <!-- 点击更多的蒙板 -->
+    <div class="mask" v-if="isShowMore" @click="isShowMore = !isShowMore"></div>
     <!-- 轮播图 -->
     <div class="swiper-tab">
       <div class="swiper-container">
@@ -178,27 +183,76 @@
         </li>
       </ul>
     </div>
-    
+    <!-- Personal -->
+    <div class="personal">
+      <div class="line"></div>
+      <div class="personal_title">
+        <span>私人订制</span>
+      </div>
+      
+    </div>
   </div>
 </template>
 
 <script type="text/ecmascript-6">
 import Swiper from 'swiper'
 import 'swiper/dist/css/swiper.min.css'
+import BScroll from 'better-scroll'
+import { Transform } from 'stream';
   export default {
+    data(){
+      return{
+        fade: true,  //箭头向下
+        isShowMore: false,
+        currentIndex:0,
+        navList:["推荐","居家生活","服饰鞋包","美食酒水","个护清洁","母婴亲子","运动旅行","数码家电","全球特色"]
+      }
+    },
     mounted(){
-      var mySwiper = new Swiper ('.swiper-container', {
+      //1. 滑动
+      this.navScroll = new BScroll(this.$refs.topWrapper, {
+          // ...... 详见配置项
+          click: true, // 标识分发点击事件
+          scrollX: true
+      })
 
-        loop: true, // 循环模式选项
-        autoplay:true, //设置自动循环播放
-        
+      //2. 轮播图
+      var mySwiper = new Swiper ('.swiper-container', {
+        //loop: true, // 循环模式选项
+        autoplay:true, //设置自动循环播放       
         // 如果需要分页器
         pagination: {
           el: '.swiper-pagination',
-        },
-               
+        },               
       })   
-    }
+    },
+    methods:{
+      goto(path){
+        this.$router.push(path)
+      },
+      // 点击导航，往前跑
+      get(index){
+        this.currentIndex = index
+        const list = this.$refs.list
+        list.style.left = -[ (index-1) * 156 + 122 ] + "px"
+      },
+      // 小箭头转的
+      handleArrow(){
+        this.isShowMore = !this.isShowMore
+        this.fade = !this.fade
+      }
+    },
+
+    updated () {
+      if (this.navScroll) {
+        this.navScroll.refresh()
+      }else {
+        this.navScroll = new BScroll('.homeNav', {
+          scrollX: true,
+          click: true
+        })
+      }
+    },
   }
 </script>
 
@@ -210,7 +264,10 @@ import 'swiper/dist/css/swiper.min.css'
   .topHeader
     width 100%
     height 148px
-    position relative
+    position fixed
+    top 0
+    left 0
+    z-index 9   
     .header
       width 100%
       height 88px
@@ -251,18 +308,22 @@ import 'swiper/dist/css/swiper.min.css'
         color #b4282d
         margin-left 16px
     .headerNavUl 
-      width 1460px
+      width  400px
       height 60px
-      background #ffffff
       //background yellow
+      background #ffffff
       padding 0px 30px
       box-sizing border-box
+      display flex
       .headerNavList
-        width 100%
+        background #ffffff
+        //width 1360px
         height 100%
         display flex
+        white-space nowrap
         li       
           height 60px
+          //width 200px
           padding 0px 22px
           box-sizing border-box
           font-size 28px
@@ -273,7 +334,8 @@ import 'swiper/dist/css/swiper.min.css'
       .toggle
         width 100px
         height 60px
-        background #ff4400
+        //background #ff4400
+        background #fff
         position absolute
         right 0
         bottom 0
@@ -286,10 +348,61 @@ import 'swiper/dist/css/swiper.min.css'
           bottom 0
           top 0
           margin auto
-          z-index 2
+          z-index 10
+          //transition all 0.5s 
+          &.downArrow
+            transform rotate(0deg)
+            transition all 0.6s 
+          &.upArrow
+            transform rotate(180deg)
+            transition all 0.6s 
+
+    .more
+      font-size 27px
+      width 650px
+      height 60px
+      line-height 60px
+      padding 0px 28px
+      background #fff
+      position fixed
+      left 0px
+      top 88px
+      z-index 9
+  .moreUl
+    width 750px
+    height 312px
+    background #fff
+    //background red
+    position fixed
+    left 0
+    top 148px
+    z-index 9
+    li
+      float left
+      width 150px
+      height 56px
+      color #333
+      font-size 25px
+      background #fafafa
+      margin 15px 0px 40px 30px
+      text-align center
+      line-height 56px
+      box-sizing border-box
+      &.current
+        border 1px solid #b4282d
+        color #b4282d
+  .mask
+    width 100%
+    height 100%
+    background-color rgba(0,0,0,0.4)
+    position fixed
+    top 0
+    left 0
+    z-index 2
   .swiper-tab
     width 100%
     height 370px
+    padding-top 148px
     .swiper-container
       width 100%
       height 100%
@@ -398,6 +511,30 @@ import 'swiper/dist/css/swiper.min.css'
             width 150px
             height 150px
             margin-right 4px
+  .personal
+    width 100%
+    height 490px
+    .line
+      width 100%
+      height 20px
+      background #eee
+    .personal_title
+      width 100%
+      height 100px
+      padding 0px 30px
+      box-sizing border-box
+      background yellow
+      line-height 100px
+      span
+        font-size 32px
+        color #333
+    
+
+
+
+
+
+      
             
 
 

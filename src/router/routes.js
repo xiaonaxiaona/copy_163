@@ -4,22 +4,59 @@ const See = ()=>import('../pages/See/See.vue')
 const ShopCart = ()=>import('../pages/ShopCart/ShopCart.vue')
 const Profile = ()=>import('../pages/Profile/Profile.vue')
 
+import Search from '../pages/Search/Search.vue'
+import Find from '../pages/See/Find.vue'
+import Select from '../pages/See/Select.vue'
+
+
 export default[
   {
     path:"/home",
-    component:Home
+    component:Home,
+    meta:{
+      isShowFooter: true
+    }
   },
   {
     path:"/category",
-    component:Category
+    component:Category,
+    meta:{
+      isShowFooter: true
+    }
   },
   {
-    path:"/see",
-    component:See
+    path: "/see",
+    component: See,
+    meta:{
+      isShowFooter: true
+    },
+    children:[
+      {
+        path: "/see/find",
+        component: Find,
+        meta:{
+          isShowFooter: true
+        }
+      },
+      {
+        path: "/see/select",
+        component: Select,
+        meta:{
+          isShowFooter: true
+        }
+      },
+      {
+        path:"",
+        redirect: "/see/find"
+      }
+    ]
   },
   {
     path:"/shopcart",
-    component:ShopCart
+    component:ShopCart,
+    meta:{
+      isShowFooter: true
+    }
   },
   {
     path:"/profile",
@@ -28,6 +65,10 @@ export default[
   {
     path:"/",
     redirect:"/home"
+  },
+  {
+    path:"/search",
+    component:Search
   }
   
 ]

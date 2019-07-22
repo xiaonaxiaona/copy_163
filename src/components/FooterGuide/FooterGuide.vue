@@ -65,7 +65,7 @@
       margin 5px
       color #7f7f7f
       &.on
-        color #f40 
+        color #b4282d 
       span
         font-size 24px        
         margin-top 4px
