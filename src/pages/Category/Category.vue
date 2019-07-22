@@ -9,19 +9,20 @@
       </div>
     </div>
     <div class="categoryCenter">
-      <div class="centerLeft">
+      <div class="centerLeft" v-if="categoryData.categoryL1List">
         <ul class="left">
-          <li v-for="(item,index) in navLeft" :key="index" :class="currentIndex===index?'current':' '" @click="currentIndex = index">{{item}}</li>
+          <li v-for="(category,index) in categoryData.categoryL1List" :key="category.id" 
+          :class="currentIndex===index?'current':' '" @click="currentIndex = index">{{category.name}}</li>
         </ul>
       </div>
-      <div class="centerRight">
+      <div class="centerRight" v-if="categoryData.categoryL1List">
         <div class="rightTop">
-          <img src="http://yanxuan.nosdn.127.net/cb225335d4a438564040f00b448e8db8.png?imageView&thumbnail=0x196">
+          <img :src="categoryData.categoryL1List[currentIndex].wapBannerUrl">
         </div>
         <div class="rightList">
-          <li class="listItem" v-for="(item,index) in 8" :key="index">
-            <img src="http://yanxuan.nosdn.127.net/56486ce98e6ba7ae59a617759e739b09.png?imageView&quality=85&thumbnail=144x144">
-            <div class="itemName">员工精选好货</div>
+          <li class="listItem" v-for="(item) in categoryData.categoryL1List[currentIndex].subCateList" :key="item.id">
+            <img :src="item.wapBannerUrl">
+            <div class="itemName">{{item.name}}</div>
           </li>         
         </div>
       </div>
@@ -30,12 +31,30 @@
 </template>
 
 <script type="text/ecmascript-6">
+import { mapState } from 'vuex'
+import BScroll from 'better-scroll'
   export default {
     data(){
       return{
         currentIndex:0,
-        navLeft:["推荐专区","夏凉专区","爆品专区","新品专区","居家生活","服饰鞋包","美食酒水","个护清洁"]
+        //navLeft:["推荐专区","夏凉专区","爆品专区","新品专区","居家生活","服饰鞋包","美食酒水","个护清洁"]
       }
+    },
+    computed:{
+      ...mapState({
+        categoryData: state => state.category.categoryData
+      })
+    },
+    async mounted(){
+      //分发
+      await this.$store.dispatch('getCategoryData')
+
+      //滑动
+      new BScroll('.centerLeft',{
+        scrollY:true,
+        click:true
+      })
+
     },
     methods:{
       goto(path){
@@ -58,6 +77,10 @@
     align-items center
     padding 16px 30px 
     box-sizing border-box
+    position fixed
+    left 0px
+    top 0px
+    z-index 2
     .categoryContent
       width 690px
       height 56px
@@ -81,13 +104,13 @@
     position relative
     .centerLeft
       width 162px
-      height 1120px
+      //height 1120px
       //background red
-      padding 40px 0px
+      //padding 0px 0px
       box-sizing border-box
       position absolute
-      left 0
-      top 0px
+      left 0px
+      top 54px
       .left
         width 100%
         height 100%
@@ -109,7 +132,7 @@
       width 588px
       height 1148px
       //background blue
-      margin-left 162px
+      margin 46px 0px 0px 162px
       padding 30px 30px 21px 30px
       box-sizing border-box
       .rightTop

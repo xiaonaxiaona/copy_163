@@ -74,69 +74,22 @@
         <div class="swiper-pagination"></div>
       </div>
     </div>
-    <!-- 中间小条 -->
-    <div class="content_line">
-      <div class="line">
+    <!-- 中间小条 mock数据-->
+    <div class="content_line" v-if="homeData.policyDescList">
+      <div class="line" v-for="(item,index) in homeData.policyDescList" :key="index">
         <div class="uicon">
-          <img src="https://yanxuan.nosdn.127.net/a03dd909803b9ac032eba58b7253a2f6.png">
+          <img :src="item.icon">
         </div>
-        <div class="name">网易自营品牌</div>
+        <div class="name">{{item.desc}}</div>
       </div>
-      <div class="line">
-        <div class="uicon">
-          <img src="https://yanxuan.nosdn.127.net/a03dd909803b9ac032eba58b7253a2f6.png">
-        </div>
-        <div class="name">30天无忧退货</div>
-      </div>
-      <div class="line">
-        <div class="uicon">
-          <img src="https://yanxuan.nosdn.127.net/eb61ee48e8942dbd1784c9ee75ebe955.png">
-        </div>
-        <div class="name">48小时快速退款</div>
-      </div>
+      
     </div>
     <!-- 分类 -->
     <div class="category">
-      <ul>
-        <li class="category_item">
-          <img src="https://yanxuan.nosdn.127.net/c6fd8835a6400b7da7a016ad85506b69.png" alt="">
-          <div class="txt">新品首发</div>
-        </li>
-        <li class="category_item">
-          <img src="https://yanxuan.nosdn.127.net/c6fd8835a6400b7da7a016ad85506b69.png" alt="">
-          <div class="txt">新品首发</div>
-        </li>
-        <li class="category_item">
-          <img src="https://yanxuan.nosdn.127.net/c6fd8835a6400b7da7a016ad85506b69.png" alt="">
-          <div class="txt">新品首发</div>
-        </li>
-        <li class="category_item">
-          <img src="https://yanxuan.nosdn.127.net/c6fd8835a6400b7da7a016ad85506b69.png" alt="">
-          <div class="txt">新品首发</div>
-        </li>
-        <li class="category_item">
-          <img src="https://yanxuan.nosdn.127.net/c6fd8835a6400b7da7a016ad85506b69.png" alt="">
-          <div class="txt">新品首发</div>
-        </li>
-        <li class="category_item">
-          <img src="https://yanxuan.nosdn.127.net/c6fd8835a6400b7da7a016ad85506b69.png" alt="">
-          <div class="txt">新品首发</div>
-        </li>
-        <li class="category_item">
-          <img src="https://yanxuan.nosdn.127.net/c6fd8835a6400b7da7a016ad85506b69.png" alt="">
-          <div class="txt">新品首发</div>
-        </li>
-        <li class="category_item">
-          <img src="https://yanxuan.nosdn.127.net/c6fd8835a6400b7da7a016ad85506b69.png" alt="">
-          <div class="txt">新品首发</div>
-        </li>
-        <li class="category_item">
-          <img src="https://yanxuan.nosdn.127.net/c6fd8835a6400b7da7a016ad85506b69.png" alt="">
-          <div class="txt">新品首发</div>
-        </li>
-        <li class="category_item">
-          <img src="https://yanxuan.nosdn.127.net/c6fd8835a6400b7da7a016ad85506b69.png" alt="">
-          <div class="txt">新品首发</div>
+      <ul v-if="homeData.kingKongModule">
+        <li class="category_item" v-for="(item,index) in homeData.kingKongModule.kingKongList" :key="index">
+          <img :src="item.picUrl">
+          <div class="txt">{{item.text}}</div>
         </li>
       </ul>
     </div>
@@ -148,39 +101,16 @@
     </div>
     <!-- m-sceneLightShoppingGuideModule -->
     <div class="m-sceneLightShoppingGuideModule">
-      <ul>
-        <li>
-          <div class="title">几元就买到小确幸</div>
-          <div class="desc">珍惜唾手可得的小幸福</div>
-          <div class="img_pic">
-            <img src="http://yanxuan.nosdn.127.net/1eecf74b769af3ed4c7817aeb5d6bb2b.png?imageView&thumbnail=150x150&quality=75" alt="">
-            <img src="http://yanxuan.nosdn.127.net/f8ab1da43385ce39549272c1571f6397.png?imageView&thumbnail=150x150&quality=75" alt="">
+      <ul v-if="homeData.sceneLightShoppingGuideModule">
+        <li v-for="(item,index) in homeData.sceneLightShoppingGuideModule" :key="index">
+          <div class="title">{{item.styleItem.title}}</div>
+          <div class="desc">{{item.styleItem.desc}}</div>
+          <div class="img_pic" v-if="item.styleItem">
+            <img :src="item.styleItem.picUrlList[0]">
+            <img :src="item.styleItem.picUrlList[1]">
           </div>
         </li>
-         <li>
-          <div class="title">几元就买到小确幸</div>
-          <div class="desc">珍惜唾手可得的小幸福</div>
-          <div class="img_pic">
-            <img src="http://yanxuan.nosdn.127.net/1eecf74b769af3ed4c7817aeb5d6bb2b.png?imageView&thumbnail=150x150&quality=75" alt="">
-            <img src="http://yanxuan.nosdn.127.net/f8ab1da43385ce39549272c1571f6397.png?imageView&thumbnail=150x150&quality=75" alt="">
-          </div>
-        </li>
-         <li>
-          <div class="title">几元就买到小确幸</div>
-          <div class="desc">珍惜唾手可得的小幸福</div>
-          <div class="img_pic">
-            <img src="http://yanxuan.nosdn.127.net/1eecf74b769af3ed4c7817aeb5d6bb2b.png?imageView&thumbnail=150x150&quality=75" alt="">
-            <img src="http://yanxuan.nosdn.127.net/f8ab1da43385ce39549272c1571f6397.png?imageView&thumbnail=150x150&quality=75" alt="">
-          </div>
-        </li>
-         <li>
-          <div class="title">几元就买到小确幸</div>
-          <div class="desc">珍惜唾手可得的小幸福</div>
-          <div class="img_pic">
-            <img src="http://yanxuan.nosdn.127.net/1eecf74b769af3ed4c7817aeb5d6bb2b.png?imageView&thumbnail=150x150&quality=75" alt="">
-            <img src="http://yanxuan.nosdn.127.net/f8ab1da43385ce39549272c1571f6397.png?imageView&thumbnail=150x150&quality=75" alt="">
-          </div>
-        </li>
+         
       </ul>
     </div>
     <!-- Personal -->
@@ -198,7 +128,9 @@
 import Swiper from 'swiper'
 import 'swiper/dist/css/swiper.min.css'
 import BScroll from 'better-scroll'
-import { Transform } from 'stream';
+
+import { mapState } from 'vuex'
+
   export default {
     data(){
       return{
@@ -208,7 +140,17 @@ import { Transform } from 'stream';
         navList:["推荐","居家生活","服饰鞋包","美食酒水","个护清洁","母婴亲子","运动旅行","数码家电","全球特色"]
       }
     },
+    
+    computed:{
+      ...mapState({
+        homeData: state => state.home.homeData
+      })
+    },
+
     mounted(){
+      this.$store.dispatch('getHomeDate')
+
+      //console.log(this.homeData)
       //1. 滑动
       this.navScroll = new BScroll(this.$refs.topWrapper, {
           // ...... 详见配置项
@@ -224,8 +166,12 @@ import { Transform } from 'stream';
         pagination: {
           el: '.swiper-pagination',
         },               
-      })   
+      })
+      
+      //3. 分发事件dispatch
+
     },
+
     methods:{
       goto(path){
         this.$router.push(path)
@@ -259,7 +205,7 @@ import { Transform } from 'stream';
 <style lang="stylus" rel="stylesheet/stylus" scoped>
 .HomeContainer
   width 100%
-  height 20000px
+  height 100%
   color #333
   .topHeader
     width 100%
@@ -448,7 +394,7 @@ import { Transform } from 'stream';
       .category_item
         width 110px
         height 156px
-        margin 10px 20px 9px
+        margin 10px 19px 9px
         //background #fff
         float left
         img
@@ -476,6 +422,7 @@ import { Transform } from 'stream';
     background #fff
     margin 0px 0px 20px
     padding 10px 30px 30px 26px
+    box-sizing border-box
     ul
       width 750px    
       box-sizing border-box
@@ -483,6 +430,9 @@ import { Transform } from 'stream';
       left 50%
       top 50%
       transform translate(-50%,-50%)
+      padding 10px 30px 30px 26px
+      box-sizing border-box
+      margin-top 20px      
       //background yellow      
       li
         width 342px
