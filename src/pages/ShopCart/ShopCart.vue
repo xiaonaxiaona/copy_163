@@ -16,7 +16,7 @@
       </div>
       <div class="cartAdd">
         <div class="add">去添加点什么吧</div>
-        <div class="isBtn">登录</div>
+        <div class="isBtn" @click="$router.replace('/login/0')">登录</div>
       </div>
     </div>
   </div>
@@ -35,7 +35,7 @@
 <style lang="stylus" rel="stylesheet/stylus" scoped>
 .shopCartContainer
   width 100%
-  min-height 10000px
+  height 100%
   background #f4f4f4
   .shopCartHeader
     background #fff

@@ -5,25 +5,60 @@
         <span class="icon">
           <i class="iconfont icon-sousuo"></i>
         </span>
-        <input type="text" placeholder="搜索商品, 共21742款好物">      
+        <input type="text" @keyup="auto" v-model="searchContent" placeholder="搜索商品, 共21742款好物">      
       </div>
       <div class="isButton" @click="$router.back()">取消</div>
     </div>
     <!-- 热门搜索 -->
     <div class="searchContainer">
       <div class="searchtitle">热门搜索</div>
-      <div class="search_list">
-        <li v-for="(item,index) in navList" :key="index">{{item}}</li>
+      <div class="search_list" v-show="!searchContent">
+        <li v-for="(item,index) in searchInitialData.hotKeywordVOList" :key="index">{{item.keyword}}</li>
       </div>
+      <section class="searchList" v-if="searchContent">
+      <ul>
+        <li v-for="(item,index) in searveSearchData" :key="index">{{item}}</li>
+      </ul>
+    </section>
     </div>
+    <!-- <section class="searchList" v-if="searchContent">
+      <ul>
+        <li v-for="(item,index) in searveSearchData" :key="index">{{item}}</li>
+      </ul>
+    </section> -->
   </div>
 </template>
 
 <script type="text/ecmascript-6">
+import {mapState} from 'vuex'
+import { reqSeeSearch } from '../../api'
+import throttle from 'lodash/throttle'
   export default {
     data(){
       return{
-        navList:["夏凉被82折起","9.9元超值专区","基础T恤30元起","拖鞋","冬枣","凉席","毛巾"]
+        searchContent:'',
+        searveSearchData : []
+        //navList:["夏凉被82折起","9.9元超值专区","基础T恤30元起","拖鞋","冬枣","凉席","毛巾"]
+      }
+    },
+    mounted(){
+      this.$store.dispatch('getSearchInitialData')
+    },
+    computed:{
+      ...mapState({
+        searchInitialData : state => state.search.searchInitialData
+      }),
+      auto(){
+        return throttle(this.toSearch,500,{leading:true})
+      }
+      
+    },
+    methods: {
+      async toSearch(){
+        const result = await reqSeeSearch(this.searchContent)
+        if(result.code*1 === 200){
+          this.searveSearchData = result.data
+        }
       }
     }
   }
@@ -34,6 +69,7 @@
     width 100%
     height 1334px
     background #eee
+    box-sizing border-box
     .searchHeader
       width 100%
       height 88px
@@ -51,6 +87,7 @@
         line-height 56px
         background #ededed
         border-radius 5px
+        box-sizing border-box
         .icon
           width 28px
           height 28px

@@ -11,9 +11,15 @@ export const reqSeeSearch = (keywordPrefix) => ajax('/api/xhr/search/searchAutoC
 export const reqSeeNav = () => ajax('/api/topic/v1/find/getTabs.json')//see的find导航数据
 export const reqSeeData = () => ajax('/api/topic/v1/find/recManual.json')//see的find数据
 
+//see中的find滑到底，再去发的请求
+export const reqSeeNewData = (page,size=5) => ajax('/api/topic/v1/find/recAuto.json',{page,size})
+
+
+
 //服务器
 export const reqCode = (phone) => ajax( '/local/sendcode', {phone})//获取手机验证码
 export const reqLoginPhone = (phone,code) => ajax( '/local/login_sms', {phone,code}, 'POST')//手机登陆
 export const reqLoginEmail = (email,pwd) => ajax( '/local/login_email', {email,pwd}, 'POST')// 邮箱登陆
 export const reqUserInfo = () => ajax( '/local/userinfo')// 请求用户
 export const reqLogout = () => ajax( '/local/logout')// 退出登录
+

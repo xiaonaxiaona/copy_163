@@ -88,7 +88,7 @@
     <div class="category">
       <ul v-if="homeData.kingKongModule">
         <li class="category_item" v-for="(item,index) in homeData.kingKongModule.kingKongList" :key="index">
-          <img :src="item.picUrl">
+          <img v-lazy="item.picUrl">
           <div class="txt">{{item.text}}</div>
         </li>
       </ul>
@@ -110,7 +110,6 @@
             <img :src="item.styleItem.picUrlList[1]">
           </div>
         </li>
-         
       </ul>
     </div>
     <!-- Personal -->
@@ -119,10 +118,10 @@
       <div class="personal_title">
         <span>私人订制</span>
       </div>
-      
     </div>
   </div>
 </template>
+
 
 <script type="text/ecmascript-6">
 import Swiper from 'swiper'
@@ -150,7 +149,6 @@ import { mapState } from 'vuex'
     mounted(){
       this.$store.dispatch('getHomeDate')
 
-      //console.log(this.homeData)
       //1. 滑动
       this.navScroll = new BScroll(this.$refs.topWrapper, {
           // ...... 详见配置项

@@ -16,14 +16,16 @@
         </ul>
       </div>
       <div class="centerRight" v-if="categoryData.categoryL1List">
-        <div class="rightTop">
-          <img :src="categoryData.categoryL1List[currentIndex].wapBannerUrl">
-        </div>
-        <div class="rightList">
-          <li class="listItem" v-for="(item) in categoryData.categoryL1List[currentIndex].subCateList" :key="item.id">
-            <img :src="item.wapBannerUrl">
-            <div class="itemName">{{item.name}}</div>
-          </li>         
+        <div class="right">
+          <div class="rightTop">
+            <img :src="categoryData.categoryL1List[currentIndex].wapBannerUrl">
+          </div>
+          <div class="rightList">
+            <li class="listItem" v-for="(item) in categoryData.categoryL1List[currentIndex].subCateList" :key="item.id">
+              <img :src="item.wapBannerUrl">
+              <div class="itemName">{{item.name}}</div>
+            </li>         
+          </div>
         </div>
       </div>
     </div>
@@ -67,7 +69,9 @@ import BScroll from 'better-scroll'
 <style lang="stylus" rel="stylesheet/stylus" scoped>
 .categoryContainer
   width 100%
-  height 1334px
+  height 100%
+  padding-bottom 200px
+  margin-bottom -200px
   .categoryHeader
     width 100%
     height 88px
@@ -102,9 +106,10 @@ import BScroll from 'better-scroll'
     height 1148px
     //background yellow
     position relative
+    top 18px
     .centerLeft
       width 162px
-      //height 1120px
+      height 1000px
       //background red
       //padding 0px 0px
       box-sizing border-box
@@ -113,7 +118,7 @@ import BScroll from 'better-scroll'
       top 54px
       .left
         width 100%
-        height 100%
+        // height 100%
         li
           width 162px
           height 50px
@@ -130,41 +135,45 @@ import BScroll from 'better-scroll'
             margin-top 0px
     .centerRight
       width 588px
-      height 1148px
+      height 500px
       //background blue
       margin 46px 0px 0px 162px
       padding 30px 30px 21px 30px
       box-sizing border-box
-      .rightTop
-        width 528px
-        height 192px
-        margin-bottom 32px
-        img 
+      .right
+        width 100%
+        //padding 30px 30px 21px 30px
+        //box-sizing border-box
+        .rightTop
           width 528px
           height 192px
-      .rightList
-        width 528px
-        height 648px
-        //background red
-        .listItem
-          width 144px
-          height 216px
-          margin-right 34px
-          float left
-          &:nth-child(3n)
-            margin-right 10px
+          margin-bottom 32px
           img 
+            width 528px
+            height 192px
+        .rightList
+          width 528px
+          height 648px
+          //background red
+          .listItem
             width 144px
-            height 144px
-            background #fff
-          .itemName
-            width 144px
-            height 72px
-            color #333333
-            font-size 24px
+            height 216px
+            margin-right 34px
+            float left
+            &:nth-child(3n)
+              margin-right 10px
+            img 
+              width 144px
+              height 144px
+              background #fff
+            .itemName
+              width 144px
+              height 72px
+              color #333333
+              font-size 24px
 
 
+            
           
-        
-  
+    
 </style>

@@ -3,9 +3,12 @@ const Category = ()=>import('../pages/Category/Category.vue')
 const See = ()=>import('../pages/See/See.vue')
 const ShopCart = ()=>import('../pages/ShopCart/ShopCart.vue')
 const Profile = ()=>import('../pages/Profile/Profile.vue')
+const Login = ()=>import('../pages/Login/Login.vue')
+const LoginPhone = ()=>import('../pages/Login/LoginPhone.vue')
+const LoginEmail = ()=>import('../pages/Login/LoginEmail.vue')
 
-import Search from '../pages/Search/Search.vue'
-import Find from '../pages/See/Find.vue'
+const Search =()=>import ('../pages/Search/Search.vue')
+const Find =()=>import ('../pages/See/Find.vue')
 import Select from '../pages/See/Select.vue'
 
 
@@ -57,6 +60,23 @@ export default[
     meta:{
       isShowFooter: true
     }
+  },
+  {
+    path:"/login/:id",  // params形式传参
+    name:'Login',
+    component:Login
+    // children:[
+    //   { 
+    //     path:"/login/:id",  // params形式传参
+    //     name:'LoginPhone',
+    //     component: LoginPhone
+    //   },
+    //   { 
+    //     path:"/login/:id",  // params形式传参
+    //     name:'LoginEmail',
+    //     component: LoginEmail
+    //   }
+    // ]
   },
   {
     path:"/profile",

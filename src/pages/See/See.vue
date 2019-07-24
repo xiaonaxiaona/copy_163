@@ -21,7 +21,9 @@
         </div>
       </div>      
     </div>
-    <router-view></router-view>
+    <keep-alive>
+      <router-view></router-view>
+    </keep-alive>
   </div>
 </template>
 
@@ -37,6 +39,7 @@
   width 100%
   min-height 3000px
   background #eee
+
   .topHeader
     bottom-border-1px(#000)
     width 100%
@@ -45,6 +48,9 @@
     background #fff
     line-height 100px
     text-align center
+    position fixed
+    left 0
+    top 0
     .header
       padding 0 10px
       width 100%
