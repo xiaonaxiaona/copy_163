@@ -49,7 +49,7 @@
 <script type="text/ecmascript-6">
 import BScroll from 'better-scroll'
 import { mapState } from 'vuex'
-import { log } from 'util';
+
   export default {
     data(){
       return{
@@ -83,13 +83,14 @@ import { log } from 'util';
       //4. scrollTop的值
       handleScroll () {
         var scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop
-        console.log(scrollTop)
+        //console.log(scrollTop)
         // 如果
         if(this.CHeight >= this.$refs.dataList.offsetHeight - scrollTop){
           //4. 分发 find滑到最后的监听
-          console.log(this.page)
+          //console.log(this.page)
           this.$store.dispatch('getSeeNewData',this.page)
-          this.page = this.page ++
+          this.page ++
+          console.log(this.page)
         }
 
       }
@@ -106,6 +107,7 @@ import { log } from 'util';
     },
     beforeDestroy(){
       window.removeEventListener('scroll', this.handleScroll) 
+
     }
   }
 </script>

@@ -12,7 +12,7 @@ export const reqSeeNav = () => ajax('/api/topic/v1/find/getTabs.json')//see的fi
 export const reqSeeData = () => ajax('/api/topic/v1/find/recManual.json')//see的find数据
 
 //see中的find滑到底，再去发的请求
-export const reqSeeNewData = (page,size=5) => ajax('/api/topic/v1/find/recAuto.json',{page,size})
+export const reqSeeNewData = (page) => ajax(`/api/topic/v1/find/recAuto.json?page=${page}&size=5`)
 
 
 
